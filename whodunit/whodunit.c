@@ -15,10 +15,10 @@ int main(int argc, char *argv[])
     }
 
     // remember filenames
-    char *infile = argv[1];
-    char *outfile = argv[2];
+    char *infile = argv[1]; //clue
+    char *outfile = argv[2]; //verdict
 
-    // open input file
+    // open input file argv[1]
     FILE *inptr = fopen(infile, "r");
     if (inptr == NULL)
     {
@@ -26,7 +26,7 @@ int main(int argc, char *argv[])
         return 2;
     }
 
-    // open output file
+    // open output file argv[2]
     FILE *outptr = fopen(outfile, "w");
     if (outptr == NULL)
     {
@@ -53,19 +53,22 @@ int main(int argc, char *argv[])
         return 4;
     }
 
-    // write outfile's BITMAPFILEHEADER
+    // write outfile's BITMAPFILEHEADER 14
     fwrite(&bf, sizeof(BITMAPFILEHEADER), 1, outptr);
 
-    // write outfile's BITMAPINFOHEADER
+    // write outfile's BITMAPINFOHEADER 40
     fwrite(&bi, sizeof(BITMAPINFOHEADER), 1, outptr);
 
     // determine padding for scanlines
     int padding = (4 - (bi.biWidth * sizeof(RGBTRIPLE)) % 4) % 4;
+    //biWidth bitmap info header width not including padding
 
     // iterate over infile's scanlines
     for (int i = 0, biHeight = abs(bi.biHeight); i < biHeight; i++)
+    //biHeight bitmap info header height
     {
         // iterate over pixels in scanline
+        //decrese width to alter bit compliling
         for (int j = 0; j < bi.biWidth; j++)
         {
             // temporary storage
@@ -74,8 +77,13 @@ int main(int argc, char *argv[])
             // read RGB triple from infile
             fread(&triple, sizeof(RGBTRIPLE), 1, inptr);
 
+                //adjust colors to reveal message
+                triple.rgbtBlue = 0xaa;
+                triple.rgbtGreen = 0xbb;
+
             // write RGB triple to outfile
             fwrite(&triple, sizeof(RGBTRIPLE), 1, outptr);
+
         }
 
         // skip over padding, if any
