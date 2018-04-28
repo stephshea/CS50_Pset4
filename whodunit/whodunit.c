@@ -1,4 +1,5 @@
 // Copies a BMP file
+//solution: Mr Plum with the candlestick in the library.
 
 #include <stdio.h>
 #include <stdlib.h>
