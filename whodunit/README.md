@@ -26,8 +26,8 @@
 ## Why might `fopen` return `NULL` in lines 24 and 32 of `copy.c`?
 ### The file may not exist or has permissions that prevent current user from opening
 
-## Why is the third argument to `fread` always `1` in ou r code?
-### because can only 'read' one file
+## Why is the third argument to `fread` always `1` in our code?
+### because can only 'read' one item
 
 ## What value does line 63 of `copy.c` assign to `padding` if `bi.biWidth` is `3`?
 ### 3
