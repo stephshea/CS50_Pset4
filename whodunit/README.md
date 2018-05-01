@@ -11,7 +11,7 @@
 ### 1 byte = 8 bits; dword = 32 bits, 4 bytes; long = 32 bits, 8 bytes ; word = 16 bits, 2 bytes
 
 ## What (in ASCII, decimal, or hexadecimal) must the first two bytes of any BMP file be? Leading bytes used to identify file formats (with high probability) are generally called "magic numbers."
-### B M
+### 4D42 hex or ‘BM'
 
 ## What's the difference between `bfSize` and `biSize`?
 ### bfSize is the size of the whole bmp file, which includes the headerfiles
@@ -27,7 +27,7 @@
 ### The file may not exist or has permissions that prevent current user from opening
 
 ## Why is the third argument to `fread` always `1` in our code?
-### because can only 'read' one item
+### because can only 'read' one item at a time
 
 ## What value does line 63 of `copy.c` assign to `padding` if `bi.biWidth` is `3`?
 ### 3

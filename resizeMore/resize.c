@@ -1,5 +1,6 @@
 // Copies a BMP file
 
+#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -8,15 +9,20 @@
 int main(int argc, char *argv[])
 {
     // ensure proper usage
-    if (argc != 3)
+    if (argc != 4)
     {
         fprintf(stderr, "Usage: copy infile outfile\n");
         return 1;
     }
 
+//convert input to float
+float f = (atof(argv[1]));
+
     // remember filenames
-    char *infile = argv[1];
-    char *outfile = argv[2];
+    char *infile = argv[2];
+    char *outfile = argv[3];
+
+
 
     // open input file
     FILE *inptr = fopen(infile, "r");
@@ -34,6 +40,8 @@ int main(int argc, char *argv[])
         fprintf(stderr, "Could not create %s.\n", outfile);
         return 3;
     }
+
+printf("float, %.2f", f);
 
     // read infile's BITMAPFILEHEADER
     BITMAPFILEHEADER bf;
@@ -59,6 +67,9 @@ int main(int argc, char *argv[])
     // write outfile's BITMAPINFOHEADER
     fwrite(&bi, sizeof(BITMAPINFOHEADER), 1, outptr);
 
+
+
+
     // determine padding for scanlines
     int padding = (4 - (bi.biWidth * sizeof(RGBTRIPLE)) % 4) % 4;
 
@@ -70,9 +81,10 @@ int main(int argc, char *argv[])
         {
             // temporary storage
             RGBTRIPLE triple;
-
+bi.biWidth *= f;
             // read RGB triple from infile
-            fread(&triple, sizeof(RGBTRIPLE), 1, inptr);
+            fread(&triple, sizeof(RGBTRIPLE), 1, inptr) ;
+
 
             // write RGB triple to outfile
             fwrite(&triple, sizeof(RGBTRIPLE), 1, outptr);

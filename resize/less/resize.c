@@ -54,6 +54,7 @@ printf("int, %d", n);
         return 4;
     }
 
+
 BITMAPFILEHEADER bfResize = bf;
 BITMAPINFOHEADER biResize = bi;
 
@@ -71,48 +72,49 @@ bfResize.bfSize = biResize.biSizeImage + sizeof(BITMAPFILEHEADER) + sizeof(BITMA
     // write outfile's BITMAPINFOHEADER
     fwrite(&biResize, sizeof(BITMAPINFOHEADER), 1, outptr);
 
-    // determine padding for scanlines
+    // determine padding for scanlines in infile
     int padding = (4 - (bi.biWidth * sizeof(RGBTRIPLE)) % 4) % 4;
 
     // iterate over infile's scanlines
     for (int i = 0, biHeight = abs(bi.biHeight); i < biHeight; i++)
     {
-        for(int resizeh = 0;  biResize.biHeight = abs(biResize.biHeight); resizeh < n; resizeh++)
+        for(int resizeh = 0; resizeh < n; resizeh++)
             {
-        // iterate over pixels/columns in scanline
-        for (int j = 0; j < bi.biWidth; j++)
-        {
-
-
-            // temporary storage
-            RGBTRIPLE triple;
-
-            //read RGB values of infile
-            fread(&triple, sizeof(RGBTRIPLE), 1, inptr);
- for(int resizew = 0; resizew < n; resizew++)
+             // iterate over pixels/columns in scanline
+            for (int j = 0; j < bi.biWidth; j++)
                 {
 
-            // write RGB triple to outfile
-            fwrite(&triple, sizeof(RGBTRIPLE), 1, outptr);
 
-        }
+                // temporary storage
+                RGBTRIPLE triple;
 
-        }
-//write to outfile's padding
+                //read RGB values of infile
+                fread(&triple, sizeof(RGBTRIPLE), 1, inptr);
+
+                for(int resizew = 0; resizew < n; resizew++)
+                    {
+
+                // write RGB triple to outfile
+                fwrite(&triple, sizeof(RGBTRIPLE), 1, outptr);
+biwidth * n;
+                    }
+
+                }
+        //write to outfile's padding
 
         // skip over padding of infile, if any; outfile will have its own unrelated to infile padding
         fseek(inptr, padding, SEEK_CUR);
 
         // then add it back (to demonstrate how)
         for (int k = 0; k < newpadding; k++)
-        {
-            while(resizeh < n-1)
             {
-            fputc(0x00, outptr);
+                while(resizeh < n-1)
+                {
+                fputc(0x00, outptr);
+                }
+            }
         }
-}
     }
-}
     // close infile
     fclose(inptr);
 
