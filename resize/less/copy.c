@@ -82,7 +82,7 @@ int main(int argc, char *argv[])
         fseek(inptr, padding, SEEK_CUR);
 
         // then add it back (to demonstrate how)
-        for (int k = 0; k < padding; k++)
+        for (int k = 0; k < padding -1; k++)
         {
             fputc(0x00, outptr);
         }
