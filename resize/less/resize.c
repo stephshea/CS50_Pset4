@@ -59,9 +59,9 @@ int main(int argc, char *argv[])
 
     //store infile's width and height
     long inwidth = bi.biWidth;
-    printf("inwidth %li", inwidth);
+    printf("inwidth %d", inwidth);
     long inheight = bi.biHeight;
-    printf("inheight %li", inheight);
+    printf("inheight %d", inheight);
 
     //store infile padding
     int inpadding = (4 - (inwidth * sizeof(RGBTRIPLE)) % 4) % 4;

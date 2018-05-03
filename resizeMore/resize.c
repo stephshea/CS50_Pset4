@@ -2,6 +2,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
 #include "bmp.h"
 
@@ -37,7 +38,7 @@ float n = (atof(argv[1]));
         fprintf(stderr, "Could not create %s.\n", outfile);
         return 3;
     }
-printf("float, %.2f", n);
+printf("float, %.2lf", n * 4);
 
     // read infile's BITMAPFILEHEADER
     BITMAPFILEHEADER bf;
@@ -58,17 +59,17 @@ printf("float, %.2f", n);
     }
 
 long oldwidth = bi.biWidth;
-printf("wid %li", oldwidth);
+printf("wid %f", oldwidth * 3.2);
 long oldheight = bi.biHeight;
-printf("h %li", oldheight);
+printf("h %f", oldheight * 3.2);
 int oldpadding = (4 - (oldwidth * sizeof(RGBTRIPLE)) % 4) % 4;
     // determine padding for scanlines in infile
 
 
 bi.biWidth *= n;
+printf("new w %d", bi.biWidth);
 bi.biHeight *= n;
-
-// biResize.biHeight *= n;
+printf("new h %d", bi.biHeight);
 
 float newpadding = (4 - (bi.biWidth * sizeof(RGBTRIPLE)) % 4) % 4;
 
@@ -118,7 +119,7 @@ bf.bfSize = bi.biSizeImage + sizeof(BITMAPFILEHEADER) + sizeof(BITMAPINFOHEADER)
         // fseek(inptr, oldpadding, SEEK_CUR);
 
         // then add it back (to demonstrate how)
-        for (float k = 0; k < newpadding  ; k++)
+        for (float k = 0; k < newpadding; k++)
                 {
 
                 fputc(0x00, outptr);
