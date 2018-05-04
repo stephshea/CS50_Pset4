@@ -1,0 +1,33 @@
+ensure proper usage
+    if (argc != 2)
+    print error
+
+declare file to search
+    char *infile = argv[1];
+
+check if input file exists
+    if no - error
+    if yes - Open
+
+declare counter for filename creation
+    int counter = 0;
+
+declare buffer to store image bytes
+    char *buffer[512];
+
+while !EOF
+    read into first 512 bytes of data
+    fread (&buffer, sizeof(buffer), 1, infile);
+
+        check if first 4 bytes correspond to jpeg data
+            if no - check next block of 512
+            if yes - if old file exists, close old file
+
+                create file name
+                start at 000 and increment so need count, type jpg
+
+                    open file to give write privelege
+                    FILE *img = fopen(filename, "w");
+
+                        write file
+close all files
