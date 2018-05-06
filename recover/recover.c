@@ -1,5 +1,8 @@
+#include <cs50.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdint.h>
+#include "bmp.h"
 
 int main(int argc, char *argv[])
 {
@@ -10,7 +13,8 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-   char *infile = argv[1];
+    //declare file to read
+    char *infile = argv[1];
 
     // open input file
     FILE *inptr = fopen(infile, "r");
@@ -20,15 +24,23 @@ int main(int argc, char *argv[])
         return 2;
     }
 
+    //need?
+    FILE* outptr = NULL;
+
+    //define jpg filename array
+    char filename[8];
+
     //counter for filename creation
     int counter = 0;
-    char *buffer[512];
 
-//while !EOF
+    BYTE buffer [512];
+
+    // while(!EOF)
+    while (counter < 50)
+    {
 
     //read into first 512 bytes of data
-    fread (&buffer, sizeof(buffer), 1, infile);
-    // fread (buffer, 1, 512, infile)
+        fread (buffer, sizeof(buffer), 1, inptr);
 
     //check if first 4 bytes correspond to jpeg data
     if (buffer[0] ==0xff &&
@@ -38,27 +50,45 @@ int main(int argc, char *argv[])
         (buffer[3] & 0xf0) == 0xe0)
 
         {
-
             //if old file exists, close old file
 
             //save with file name, start at 000 and increment so need count, type jpg
-            sprintf(filename, "%03i.jpg", 2);
+
+            sprintf(filename, "%03i.jpg", counter);
 
             //open file to give write privelege
-            FILE *img = fopen(filename, "w");
+            // FILE *img = fopen(filename, "w");
+            outptr = fopen(filename, "w");
 
-            fwrite(buffer, sizeof(buffer),1 outptr)
+            fwrite(buffer, sizeof(buffer), 1, outptr);
+            counter++;
+
             //fwrite(pointer to struc that contains bytes reading from,
-            // size,number, new image FILE *
-//check for EOF
-        }
-    else if
-        {
-           //not a jpg
-           //start at the next 512 block to check for jpg
-        }
+            //size,number, new image FILE *
+            //check for EOF
 
-        // fclose(file); new jpg
+            fclose(outptr);
+            }
+
+    else
+    {
+    if (outptr == NULL)
+
+                {
+                    fclose(outptr);
+                }
+
+    //     {
+    //       //not a jpg
+    //       //start at the next 512 block to check for jpg
+    //         if (NULL != outptr)
+    //         {
+    //             fwrite(buffer, 512, 1, outptr);
+    //         }
+         }
+        fclose(inptr);
+        fclose(outptr);
+}
 
     // success
     return 0;
