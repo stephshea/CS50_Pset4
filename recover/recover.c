@@ -18,13 +18,15 @@ int main(int argc, char *argv[])
 
     // open input file
     FILE *inptr = fopen(infile, "r");
+
+    //if input does not exist, print error
     if (inptr == NULL)
     {
         fprintf(stderr, "Could not open %s.\n", infile);
         return 2;
     }
 
-    //set outptr to NULL
+    //set outptr to NULL -- space allocated and points to no chunk of memory
     FILE *outptr = NULL;
 
     //define jpg filename array with a length of 8 for filename and null char
