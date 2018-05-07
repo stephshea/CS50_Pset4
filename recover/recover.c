@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <stdint.h>
 
-typedef uint8_t  BYTE;
+typedef uint8_t BYTE;
 
 int main(int argc, char *argv[])
 {
@@ -36,17 +36,18 @@ int main(int argc, char *argv[])
     //size of buffer per size of jpg
     BYTE buffer[512];
 
-    //read into 512 bytes of data
+    //read into 512 bytes of data until end of inptr
     while (fread(&buffer, sizeof(buffer), 1, inptr) == 1)
     {
-        //check if first 4 bytes correspond to jpeg data
+        //check if first 4 bytes correspond to jpg data
         if (buffer[0] == 0xff &&
             buffer[1] == 0xd8 &&
             buffer[2] == 0xff &&
-            //use bitwise operator & because this byte can vary
+            //use bitwise operator '&' because this byte can vary
             (buffer[3] & 0xf0) == 0xe0)
 
         {
+            //if a jpg...
             //sprintf returns the total number of characters written to ptr
             //the 0 flag indicates leading zeroes, the 3 indicates their shall be at most 3 leading zeroes
             //and the i indicates it should format the variable as an int
@@ -55,23 +56,18 @@ int main(int argc, char *argv[])
             //open file to give write privelege
             outptr = fopen(filename, "w");
 
-            //fwrite(pointer to struc that contains bytes reading from, size,number, new image FILE *
+            //write to file
             fwrite(buffer, sizeof(buffer), 1, outptr);
+
+            //increment counter int for int in filename
             counter++;
         }
 
         //if outptr contains a jpg
         else if (outptr != NULL)
         {
-            //write the file
-            fwrite(&buffer, sizeof(buffer), 1, outptr);
+            //write bytes to jpg file
+            fwrite(buffer, sizeof(buffer), 1, outptr);
         }
     }
-    //close raw file
-    fclose(inptr);
-    //close last jpg
-    fclose(outptr);
-
-    // success
-    return 0;
 }
