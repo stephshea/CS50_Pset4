@@ -72,4 +72,10 @@ int main(int argc, char *argv[])
             fwrite(buffer, sizeof(buffer), 1, outptr);
         }
     }
+
+    //fclose doesn't seem to affect valgrind -- basically same result without
+    fclose(inptr);
+    fclose(outptr);
+
+    return 0;
 }
